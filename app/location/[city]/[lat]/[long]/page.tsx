@@ -43,12 +43,33 @@ async function WeatherPage({ params: { city, lat, long } }: WeatherPageProps) {
     },
     body: JSON.stringify({ weatherData: dataToSend }),
   });
-  const GPTdata = await res.json();
-  console.log(GPTdata);
+
+  console.log("Content-Type:", res.headers.get("Content-Type"));
+  const text = await res.text();
+  console.log("Response text:", text);
+
+  let GPTdata;
+  try {
+    GPTdata = JSON.parse(text);
+  } catch (error) {
+    console.error("Failed to parse JSON:", error);
+  }
 
   const { data: openAIData } = GPTdata;
 
-  // console.log(openAIData);
+  // const res = await fetch(`${getBasePath()}/api/getWeatherSummary`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({ weatherData: dataToSend }),
+  // });
+  // const GPTdata = await res.json();
+  // console.log(GPTdata);
+
+  // const { data: openAIData } = GPTdata;
+
+  // // console.log(openAIData);
 
   return (
     <div className="flex flex-col min-h-screen xl:flex-row">
