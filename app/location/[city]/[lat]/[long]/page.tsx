@@ -1,6 +1,10 @@
 import { getClient } from "@/apolo-client";
 import CalloutCard from "@/components/CalloutCard";
+import HumidityChart from "@/components/HumidityChart";
+import InformationPanel from "@/components/InformationPanel";
+import RainChart from "@/components/RainChart";
 import StatCard from "@/components/StatCard";
+import TempChart from "@/components/TempChart";
 import fetchWeatherQueries from "@/graphql/queries/fetchWeatherQueries";
 
 type WeatherPageProps = {
@@ -20,15 +24,16 @@ async function WeatherPage({ params: { city, lat, long } }: WeatherPageProps) {
       current_weather: "true",
       longitude: long,
       latitude: lat,
-      timezone: "GMT",
+      timezone: "EET",
     },
   });
 
   const results: Root = data.myQuery;
   return (
-    <div>
-      {/* <Info panel/> */}
-      <div>
+    <div className="flex flex-col min-h-screen xl:flex-row">
+      <InformationPanel city={city} lat={lat} long={long} results={results} />
+
+      <div className="flex-1 p-3 lg:p-10">
         <div className="pb-5">
           <div className="pb-5 m-4">
             <h2 className="text-xl font-bold">Todays Overview</h2>
@@ -87,9 +92,9 @@ async function WeatherPage({ params: { city, lat, long } }: WeatherPageProps) {
 
         <hr className="mb-5" />
         <div className="space-y-3">
-          {/* TempChart */}
-          {/* RainChart */}
-          {/* HumidityChart */}
+          <TempChart results={results} />
+          <RainChart results={results} />
+          <HumidityChart results={results} />
         </div>
       </div>
     </div>
