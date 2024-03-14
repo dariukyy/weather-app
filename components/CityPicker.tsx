@@ -47,7 +47,7 @@ function CityPicker() {
   function handleSelectedCity(city: cityOption) {
     setSelectedCity(city);
     router.push(
-      `location/${city?.value.name}/${city?.value.latitude}/${city?.value.longitude}`
+      `/location/${city?.value.name}/${city?.value.latitude}/${city?.value.longitude}`
     );
   }
 
@@ -59,6 +59,7 @@ function CityPicker() {
           <label htmlFor="country">Country</label>
         </div>
         <Select
+          className="text-gray-800"
           id="country"
           value={selectedCountry}
           onChange={handleSelectedCountry}
@@ -74,6 +75,7 @@ function CityPicker() {
             <label htmlFor="city">City</label>
           </div>
           <Select
+            className="text-gray-800"
             id="city"
             value={selectedCity}
             onChange={handleSelectedCity}
