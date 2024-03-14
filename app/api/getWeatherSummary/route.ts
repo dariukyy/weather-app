@@ -27,7 +27,5 @@ export async function POST(request: Request) {
 
   const { choices } = responce;
 
-  // console.log("DATA IS:", choices[0].message.content);
-
   return NextResponse.json({ data: choices[0].message.content });
 }
