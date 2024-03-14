@@ -9,7 +9,7 @@ import fetchWeatherQueries from "@/graphql/queries/fetchWeatherQueries";
 import { cleanData } from "@/lib/cleandData";
 import { getBasePath } from "@/lib/getBasePath";
 
-export const revalidate = 60;
+export const revalidate = 1440;
 
 type WeatherPageProps = {
   params: {
