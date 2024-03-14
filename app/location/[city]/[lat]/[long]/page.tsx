@@ -36,6 +36,17 @@ async function WeatherPage({ params: { city, lat, long } }: WeatherPageProps) {
 
   const dataToSend = cleanData(results, city);
 
+  // const res = await fetch(`${getBasePath()}/api/getWeatherSummary`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({ weatherData: dataToSend }),
+  // });
+  // console.log(res);
+  // const GPTdata = await res.json();
+
+  // const { data: openAIData } = GPTdata;
   const res = await fetch(`${getBasePath()}/api/getWeatherSummary`, {
     method: "POST",
     headers: {
@@ -44,8 +55,9 @@ async function WeatherPage({ params: { city, lat, long } }: WeatherPageProps) {
     body: JSON.stringify({ weatherData: dataToSend }),
   });
 
-  const GPTdata = await res.json();
+  const text = await res.text();
 
+  const GPTdata = JSON.parse(text);
   const { data: openAIData } = GPTdata;
 
   return (
