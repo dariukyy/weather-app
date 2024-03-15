@@ -84,7 +84,7 @@ async function WeatherPage({ params: { city, lat, long } }: WeatherPageProps) {
           </div>
 
           <div className="m-4 mb-10">
-            <CalloutCard message={openAIData.content} />
+            <CalloutCard message={openAIData} />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 m-4">
