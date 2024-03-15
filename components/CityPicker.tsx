@@ -2,7 +2,7 @@
 
 import { RiEarthLine } from "@remixicon/react";
 import { Country, City } from "country-state-city";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Select from "react-select";
 
@@ -39,6 +39,7 @@ function CityPicker() {
   const [selectedCountry, setSelectedCountry] = useState<option>(null);
   const [selectedCity, setSelectedCity] = useState<cityOption>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   function handleSelectedCountry(option: option) {
     setSelectedCountry(option);
@@ -50,6 +51,7 @@ function CityPicker() {
       `/location/${city?.value.name}/${city?.value.latitude}/${city?.value.longitude}`
     );
   }
+  const autofocus = pathname === "/";
 
   return (
     <div className="space-y-4">
@@ -65,6 +67,7 @@ function CityPicker() {
           onChange={handleSelectedCountry}
           placeholder="Select a country..."
           options={options}
+          autoFocus={autofocus}
         />
       </div>
 
@@ -80,6 +83,7 @@ function CityPicker() {
             value={selectedCity}
             onChange={handleSelectedCity}
             placeholder="Select a city..."
+            autoFocus={true}
             options={City.getCitiesOfCountry(
               selectedCountry!.value.isoCode
             )?.map((city) => ({
