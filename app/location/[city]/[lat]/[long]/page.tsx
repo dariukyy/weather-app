@@ -67,6 +67,7 @@ async function WeatherPage({ params: { city, lat, long } }: WeatherPageProps) {
 
   const openAIData = await fetchOpenAi();
   // const { data: openAIData } = GPTdata;
+  console.log("openAIData", openAIData);
 
   return (
     <div className="flex flex-col min-h-screen xl:flex-row">
