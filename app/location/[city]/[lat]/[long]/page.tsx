@@ -36,40 +36,36 @@ async function WeatherPage({ params: { city, lat, long } }: WeatherPageProps) {
 
   const dataToSend = cleanData(results, city);
 
-  const res = await fetch(`${getBasePath()}/api/getWeatherSummary`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ weatherData: dataToSend }),
-  });
-
-  console.log("Content-Type:", res.headers.get("Content-Type"));
-  const text = await res.text();
-  console.log("Response text:", text);
-
-  let GPTdata;
-  try {
-    GPTdata = JSON.parse(text);
-  } catch (error) {
-    console.error("Failed to parse JSON:", error);
+  async function fetchOpenAi() {
+    let openAIData; // Define openAIData here
+    try {
+      const res = await fetch(`${getBasePath()}/api/getWeatherSummary`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ weatherData: dataToSend }),
+      });
+      if (!res.ok) {
+        console.log("Response status:", res.status);
+        console.log("Response status text:", res.statusText);
+        throw new Error(
+          "Failed to fetch GPT data, Response status:" +
+            res.status +
+            "Response status text" +
+            res.statusText +
+            res.json()
+        );
+      }
+      const { data } = await res.json();
+      openAIData = data; // Assign the value here
+    } catch (error: Error | any) {
+      console.error("Failed to fetch GPT data", error, error.message);
+    }
+    return openAIData;
   }
-
-  const { data: openAIData } = GPTdata;
-
-  // const res = await fetch(`${getBasePath()}/api/getWeatherSummary`, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({ weatherData: dataToSend }),
-  // });
-  // const GPTdata = await res.json();
-  // console.log(GPTdata);
-
+  const openAIData = await fetchOpenAi();
   // const { data: openAIData } = GPTdata;
-
-  // // console.log(openAIData);
 
   return (
     <div className="flex flex-col min-h-screen xl:flex-row">
