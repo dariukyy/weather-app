@@ -11,6 +11,22 @@ type InformationPanelProps = {
 };
 
 function InformationPanel({ city, lat, long, results }: InformationPanelProps) {
+  let sunrise = new Date(results.daily.sunrise[0]);
+  sunrise.setHours(sunrise.getHours() - 1);
+  const sunriseTime = sunrise.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  let sunset = new Date(results.daily.sunset[0]);
+  sunset.setHours(sunset.getHours() - 1);
+  const sunsetTime = sunset.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
   return (
     <div className="bg-gradient-to-br from-[#394F68] to-[#183B7E] text-white p-10">
       <div className="pb-5">
@@ -40,10 +56,10 @@ function InformationPanel({ city, lat, long, results }: InformationPanelProps) {
           </p>
         </div>
         <p className="text-xl font-bold uppercase">
-          {new Date().toLocaleTimeString("en-GB", {
-            hour: "numeric",
-            minute: "numeric",
-            hour12: true,
+          {new Date().toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
           })}
         </p>
       </div>
@@ -55,8 +71,8 @@ function InformationPanel({ city, lat, long, results }: InformationPanelProps) {
               weatherCodeToString[results.current_weather.weathercode].icon
             }.png`}
             alt="Weather Icon"
-            width={75} // specify the width
-            height={75} // specify the height
+            width={75}
+            height={75}
           />
 
           <div className="flex items-center justify-between space-x-10">
@@ -76,13 +92,7 @@ function InformationPanel({ city, lat, long, results }: InformationPanelProps) {
 
           <div className="flex-1 flex justify-between items-center">
             <p className="font-extralight">Sunrise</p>
-            <p className="uppercase text-2xl">
-              {new Date(results.daily.sunrise[0]).toLocaleTimeString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false,
-              })}
-            </p>
+            <p className="uppercase text-2xl">{sunriseTime}</p>
           </div>
         </div>
         <div className="flex items-center space-x-2 px-4 py-3 border border-[#6F90CD] rounded-md bg-[#405885]">
@@ -90,13 +100,7 @@ function InformationPanel({ city, lat, long, results }: InformationPanelProps) {
 
           <div className=" flex-1 flex justify-between items-center">
             <p className="font-extralight">Sunset</p>
-            <p className="uppercase text-2xl">
-              {new Date(results.daily.sunset[0]).toLocaleTimeString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false,
-              })}
-            </p>
+            <p className="uppercase text-2xl">{sunsetTime}</p>
           </div>
         </div>
       </div>
