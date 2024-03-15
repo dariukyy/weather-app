@@ -56,7 +56,7 @@ function InformationPanel({ city, lat, long, results }: InformationPanelProps) {
           </p>
         </div>
         <p className="text-xl font-bold uppercase">
-          {new Date().toLocaleTimeString("en-US", {
+          {new Date().toLocaleTimeString("en-GB", {
             hour: "2-digit",
             minute: "2-digit",
             hour12: false,
